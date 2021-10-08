@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int maxProductSubset(int arr[], int n)
+{
+	int prod=arr[0],l=0,r=0;
+    for(int i=0;i<n;++i)
+    {
+      l=((l==0?1:l)*arr[i])%1000000007;
+      r=((r==0?1:r)*arr[n-1-i])%1000000007;
+      prod=max(prod,max(l,r))%1000000007;
+    }
+	return prod;
+}
+
+// Driver Code
+int main()
+{
+	int a[] = { -1, -1, -2, 4, 3 };
+	int n = sizeof(a) / sizeof(a[0]);
+	cout << maxProductSubset(a, n);
+	return 0;
+}

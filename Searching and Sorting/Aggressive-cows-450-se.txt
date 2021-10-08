@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
+bool isValid(ll arr[],ll n,ll c,ll min)
+{
+	ll last_pos=arr[0],cowrequired=1;
+	for(ll i=1;i<n;++i)
+	{
+		if ((arr[i] - last_pos) >= min)
+	    {
+		      if (++cowrequired == c)
+		        return true;
+		      last_pos = arr[i];
+	    }
+	}
+	return false;
+}
+
+ll largestMinimumDistance(ll arr[],ll n,ll c)
+{
+	ll start=0,end=*max_element(arr,arr+n),min=0;
+	while(start<=end)
+	{
+		ll mid=(start+end)/2;
+		if(isValid(arr,n,c,mid))
+		{
+			min=mid;
+			start=mid+1;
+		}
+		else
+			end=mid-1;
+	}
+	return min;
+}
+
+int main() {
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+		ll n,c;
+		cin>>n>>c;
+		ll arr[n];
+		for(ll i=0;i<n;++i)
+			cin>>arr[i];
+		sort(arr,arr+n);
+		cout<<largestMinimumDistance(arr,n,c)<<"\n";
+	}
+	return 0;
+}

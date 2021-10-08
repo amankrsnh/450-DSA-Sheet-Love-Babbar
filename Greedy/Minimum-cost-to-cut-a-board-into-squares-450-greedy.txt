@@ -1,0 +1,26 @@
+
+int boardCutting(vector<int>& horizontal, vector<int>& vertical, int m, int n)
+{
+    priority_queue<pair<int,int>> p;
+    int vertpiece=1,horpiece=1,tot_cost=0;
+    for(int i=0;i<m;++i)
+        p.push({horizontal[i],-1});
+    for(int i=0;i<n;++i)
+        p.push({vertical[i],1});
+    while(!p.empty())
+    {
+        pair<int,int> x=p.top();
+        p.pop();
+        if(x.second==-1)
+        {
+            vertpiece+=1;
+            tot_cost+=(x.first*horpiece);
+        }
+        else
+        {
+            horpiece+=1;
+            tot_cost+=(x.first*vertpiece);
+        }
+    }
+    return tot_cost;
+}

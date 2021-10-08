@@ -1,0 +1,62 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution
+{
+    public:
+    int dfs(int start[],int s,int &ans,int dist[])
+    {
+        if(start[s]==0)
+            return s;
+        ans=min(ans,dist[s]);
+        return dfs(start,start[s],ans,dist);
+    }
+    vector<vector<int>> solve(int n,int p,vector<int> a,vector<int> b,vector<int> d)
+    {
+        vector<vector<int>> result;
+        int start[21]={0},end[21]={0},dist[21]={0},ans=101;
+        for(int i=0;i<p;++i)
+        {
+            start[a[i]]=b[i];
+            end[b[i]]=a[i];
+            dist[a[i]]=d[i];
+        }
+        for(int i=1;i<=n;++i)
+        {
+            if(end[i]==0 && start[i]>0)
+            {
+                ans=101;
+                int e=dfs(start,i,ans,dist);
+                result.push_back({i,e,ans});
+            }
+        }
+        return result;
+    }
+};
+
+
+// { Driver Code Starts.
+int main()
+{
+	int t,n,p;
+	cin>>t;
+	while(t--)
+    {
+        cin>>n>>p;
+        vector<int> a(p),b(p),d(p);
+        for(int i=0;i<p;i++){
+            cin>>a[i]>>b[i]>>d[i];
+        }
+        Solution obj;
+        vector<vector<int>> answer = obj.solve(n,p,a,b,d);
+        cout<<answer.size()<<endl;
+        for(auto i:answer)
+        {
+            cout<<i[0]<<" "<<i[1]<<" "<<i[2]<<endl;
+        }
+        
+    }
+	return 0;
+}  // } Driver Code Ends

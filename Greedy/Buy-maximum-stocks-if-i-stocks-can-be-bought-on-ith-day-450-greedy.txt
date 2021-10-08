@@ -1,0 +1,15 @@
+#include<bits/stdc++.h>
+int maxStock(vector<int> &prices, int n, int amount)
+{
+    vector<pair<int,int>> v;
+    for(int i=0;i<n;++i)
+        v.push_back({prices[i],i+1});
+    sort(v.begin(),v.end());
+    int nos=0;
+    for(int i=0;i<n;++i)
+    {
+        nos+=min(v[i].second,amount/v[i].first);
+        amount-=v[i].first*min(v[i].second,amount/v[i].first);
+    }
+    return nos;
+}

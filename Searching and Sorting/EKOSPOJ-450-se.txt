@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
+bool isValid(ll arr[],ll n,ll m,ll mid)
+{
+	ll sum=0,temp=arr[n-1]-mid;
+	for(ll i=n-1;i>=0;--i)
+	{
+		if(arr[i]>temp)
+		{
+			sum+=(arr[i]-mid);
+			if(sum>=m)
+				return true;
+		}
+		else if(arr[i]<=temp)
+		{
+			break;
+		}
+	}
+	return false;
+}
+
+ll findMaximumHeight(ll arr[],ll n,ll m)
+{
+	ll start=0,end=m,result=0;
+	while(start<=end)
+	{
+		ll mid=(start+end)/2;
+		if(isValid(arr,n,m,mid))
+		{
+			result=mid;
+			start=mid+1;
+		}
+		else
+			end=mid-1;
+	}
+	return result;
+}
+int main() {
+	ll n,m;
+	scanf("%lld %lld",&n,&m);
+	ll arr[n];
+	for(ll i=0;i<n;++i)
+		scanf("%lld",&arr[i]);
+	sort(arr,arr+n);
+	printf("%lld",findMaximumHeight(arr,n,m));
+	return 0;
+}

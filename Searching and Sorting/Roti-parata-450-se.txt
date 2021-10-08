@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
+bool checkTime(int arr[],int roti,int time,int size)
+{
+	int paratha=0,j,part;
+	for(int i=0;i<size;++i)
+	{
+		part=arr[i];
+		j=2;
+		while(part<=time)
+		{
+			paratha++;
+			part+=(j*arr[i]);
+			j++;
+		}
+		if(paratha>=roti)
+			return true;
+	}
+	return false;
+}
+
+ll findMinimumTime(int arr[], int roti,int size)
+{
+	ll s=0,e=1e9,ans;
+	while(s<=e)
+	{
+		ll mid=(s+e)/2;
+		if(checkTime(arr,roti,mid,size))
+		{
+			ans=mid;
+			e=mid-1;
+		}
+		else
+			s=mid+1;
+	}
+	return ans;
+}
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int roti,size;
+		cin>>roti>>size;
+		int arr[size];
+		for(int i=0;i<size;++i)
+			cin>>arr[i];
+		cout<<findMinimumTime(arr,roti,size)<<"\n";
+	}
+	return 0;
+}
